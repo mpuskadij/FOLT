@@ -1,0 +1,55 @@
+name: mpuskadij20_docker_compose
+
+services:
+  partner:
+    build:
+      context: ./mpuskadij20_vjezba_08_dz_3_partner
+    container_name: partner_mpuskadij20
+    hostname: partner_mpuskadij20
+    networks:
+      mreza_mpuskadij20:
+        ipv4_address: 20.24.5.3
+    volumes:
+      - svezak_mpuskadij20:/usr/app/podaci
+    depends_on:
+      - tvrtka
+    expose:
+      - "8010"
+      - "8011"
+      
+  tvrtka:
+    build:
+      context: ./mpuskadij20_vjezba_08_dz_3_tvrtka
+    container_name: tvrtka_mpuskadij20
+    hostname: tvrtka_mpuskadij20
+    networks:
+      mreza_mpuskadij20:
+        ipv4_address: 20.24.5.2
+    volumes:
+      - svezak_mpuskadij20:/usr/app/podaci
+    expose:
+      - "8000"
+      - "8001"
+      - "8002"
+
+  servisi:
+    build:
+      context: ./mpuskadij20_vjezba_08_dz_3_servisi
+    container_name: servis_mpuskadij20
+    hostname: servis_mpuskadij20
+    networks:
+      mreza_mpuskadij20:
+        ipv4_address: 20.24.5.20
+    depends_on:
+      - partner
+      - tvrtka
+    expose:
+      - "8080"
+
+networks:
+  mreza_mpuskadij20:
+    external: true
+
+volumes:
+  svezak_mpuskadij20:
+    external: true

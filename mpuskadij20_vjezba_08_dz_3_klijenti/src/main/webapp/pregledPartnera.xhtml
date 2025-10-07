@@ -1,0 +1,143 @@
+<ui:composition template="predlozak.xhtml"
+	xmlns:ui="jakarta.faces.facelets" xmlns:h="jakarta.faces.html"
+	xmlns:f="jakarta.faces.core">
+
+	<ui:define name="title">Pregled partnera iz baze podataka</ui:define>
+	<ui:define name="content">
+	
+	<h:form id="stranica">
+		    <h:panelGroup rendered="#{pregledPartnera.odabraniPartner == null}" layout="block" id="sviPartneri">
+	 <h:dataTable value="#{pregledPartnera.partneri}" var="partner" border="1">
+	
+    <h:column>
+        <f:facet name="header">ID</f:facet>
+        #{partner.id()}
+    </h:column>
+
+    <h:column>
+        <f:facet name="header">Naziv</f:facet>
+        #{partner.naziv()}
+    </h:column>
+    
+    <h:column>
+        <f:facet name="header">Vrsta kuhinje</f:facet>
+        #{partner.vrstaKuhinje()}
+    </h:column>
+    
+        <h:column>
+        <f:facet name="header">Adresa</f:facet>
+        #{partner.adresa()}
+    </h:column>
+    
+     <h:column>
+        <f:facet name="header">Mrežna vrata</f:facet>
+        #{partner.mreznaVrata()}
+    </h:column>
+    
+     <h:column>
+        <f:facet name="header">Mrežna vrata kraj</f:facet>
+        #{partner.mreznaVrataKraj()}
+    </h:column>
+    
+    <h:column>
+        <f:facet name="header">GPS Širina</f:facet>
+        #{partner.gpsSirina()}
+    </h:column>
+    
+     <h:column>
+        <f:facet name="header">GPS dužina</f:facet>
+        #{partner.gpsDuzina()}
+    </h:column>
+    
+     <h:column>
+        <f:facet name="header">Sigurnosni kod</f:facet>
+        #{partner.sigurnosniKod()}
+    </h:column>
+    
+    <h:column>
+        <f:facet name="header">Admin kod</f:facet>
+        #{partner.adminKod()}
+    </h:column>
+    
+    <h:column>
+        <h:commandLink value="Detalji" action="#{pregledPartnera.odaberiPartnera(partner)}">
+                    <f:ajax render="stranica" />
+         </h:commandLink>
+    </h:column>
+    
+    </h:dataTable>
+    
+    </h:panelGroup>
+    
+    
+    <h:panelGroup rendered="#{pregledPartnera.odabraniPartner != null}" layout="block" id="odabraniPartner">    
+    	<h:dataTable value="#{pregledPartnera.odabraniPartner}" var="partner" border="1">
+     <h:column>
+        <f:facet name="header">ID</f:facet>
+        #{partner.id()}
+    </h:column>
+
+    <h:column>
+        <f:facet name="header">Naziv</f:facet>
+        #{partner.naziv()}
+    </h:column>
+    
+    <h:column>
+        <f:facet name="header">Vrsta kuhinje</f:facet>
+        #{partner.vrstaKuhinje()}
+    </h:column>
+    
+    <h:column>
+        <f:facet name="header">Adresa</f:facet>
+        #{partner.adresa()}
+    </h:column>
+    
+     <h:column>
+        <f:facet name="header">Mrežna vrata</f:facet>
+        #{partner.mreznaVrata()}
+    </h:column>
+    
+     <h:column>
+        <f:facet name="header">Mrežna vrata kraj</f:facet>
+        #{partner.mreznaVrataKraj()}
+    </h:column>
+    
+    <h:column>
+        <f:facet name="header">GPS Širina</f:facet>
+        #{partner.gpsSirina()}
+    </h:column>
+    
+     <h:column>
+        <f:facet name="header">GPS dužina</f:facet>
+        #{partner.gpsDuzina()}
+    </h:column>
+    
+     <h:column>
+        <f:facet name="header">Sigurnosni kod</f:facet>
+        #{partner.sigurnosniKod()}
+    </h:column>
+    
+    <h:column>
+        <f:facet name="header">Admin kod</f:facet>
+        #{partner.adminKod()}
+    </h:column>
+    
+    </h:dataTable>
+    
+    <h:commandButton value="Natrag na sve partnere" action="#{pregledPartnera.resetirajOdabranogPartnera()}">
+            <f:ajax render="stranica" />
+        </h:commandButton>
+    </h:panelGroup>
+	
+	</h:form>
+		
+
+
+    
+    
+
+	
+	</ui:define>
+	<ui:define name="nav">
+	</ui:define>
+</ui:composition>
