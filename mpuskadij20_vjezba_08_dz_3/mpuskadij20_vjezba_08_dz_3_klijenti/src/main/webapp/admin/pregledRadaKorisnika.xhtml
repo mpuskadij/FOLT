@@ -1,0 +1,87 @@
+<ui:composition template="/predlozak.xhtml"
+	xmlns:ui="jakarta.faces.facelets" xmlns:h="jakarta.faces.html"
+	xmlns:f="jakarta.faces.core">
+
+	<ui:define name="title">Pregled obračuna</ui:define>
+	<ui:define name="content">
+	
+	<h:form id="stranica">
+	 <h:panelGrid columns="2">
+        <h:outputLabel for="vrijemeOd" value="Vrijeme od:" />
+        <h:inputText id="vrijemeOd" value="#{pregledRadaKorisnika.vrijemeOd}" required="false">
+        		<f:passThroughAttribute name="type" value="date" />
+        		<f:convertDateTime pattern="yyyy-MM-dd" />
+        </h:inputText>
+        
+         <h:outputLabel for="vrijemeDo" value="Vrijeme od:" />
+        <h:inputText id="vrijemeDo" value="#{pregledRadaKorisnika.vrijemeDo}" required="false">
+        		<f:passThroughAttribute name="type" value="date" />
+        		<f:convertDateTime pattern="yyyy-MM-dd" />
+        </h:inputText>
+        
+        <h:outputLabel for="korisnici">
+				<h:outputText value="Korisnici:" />
+			</h:outputLabel>
+			<h:selectOneMenu value="#{pregledRadaKorisnika.odabraniKorisnik}">
+			    <f:selectItem itemLabel="Svi" itemValue="Svi" noSelectionOption="false" />
+				<f:selectItems value="#{pregledKorisnika.korisnici}" var="k"
+					itemLabel="#{k.korisnik()} - #{k.prezime()}  #{k.ime()}"
+					itemValue="#{k.korisnik()}" />
+			</h:selectOneMenu>
+
+        <h:commandButton value="Pronađi!">
+            <f:ajax execute="@form" render="stranica poruka" listener="#{pregledRadaKorisnika.pretrazi}" />
+        </h:commandButton>
+    </h:panelGrid>
+    
+    	 <h:dataTable value="#{pregledRadaKorisnika.zapisi}" var="zapis" border="1">
+	
+    <h:column>
+        <f:facet name="header">Zapis ID</f:facet>
+        #{zapis.getId()}
+    </h:column>
+
+    <h:column>
+        <f:facet name="header">Adresa računala</f:facet>
+        #{zapis.getAdresaracunala()}
+    </h:column>
+    
+    
+    <h:column>
+        <f:facet name="header">IP adresa računala</f:facet>
+        #{zapis.getIpadresaracunala()}
+    </h:column>
+    
+    <h:column>
+        <f:facet name="header">Korisničko ime</f:facet>
+        #{zapis.getKorisnickoime()}
+    </h:column>
+    
+    <h:column>
+        <f:facet name="header">Opis rada</f:facet>
+        #{zapis.getOpisrada()}
+    </h:column>
+    
+     <h:column>
+        <f:facet name="header">Vrijeme</f:facet>
+        <h:outputText value="#{zapis.getVrijeme()}">
+        	<f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" />
+    	</h:outputText>
+    </h:column>
+    
+    </h:dataTable>
+    
+    
+    
+  	<h:outputText value="#{pregledRadaKorisnika.poruka}" />
+    
+	
+	</h:form>
+		
+
+
+	
+	</ui:define>
+	<ui:define name="nav">
+	</ui:define>
+</ui:composition>
